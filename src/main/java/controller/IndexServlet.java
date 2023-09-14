@@ -48,4 +48,8 @@ public class IndexServlet extends HttpServlet {
         }
         templateEngine.render("dashboard.ftl", response);
     }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("Received a request");
+    }
 }
