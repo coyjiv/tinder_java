@@ -1,5 +1,4 @@
-import controller.IndexServlet;
-import controller.TemplateEngine;
+import controller.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -20,12 +19,16 @@ public class JettyRun
         ServletContextHandler handler = new ServletContextHandler();
 
         IndexServlet indexServlet = new IndexServlet(templateEngine);
-
+        LikedServlet likedServlet = new LikedServlet(templateEngine);
+        LoginServlet loginServlet = new LoginServlet(templateEngine);
+        MessagesServlet messagesServlet = new MessagesServlet(templateEngine);
 
         handler.addServlet(new ServletHolder(indexServlet), "/");
-//        handler.addServlet(new ServletHolder(helloServlet), "/hello");
+        handler.addServlet(new ServletHolder(likedServlet), "/liked" );
+        handler.addServlet(new ServletHolder(loginServlet),"/login");
+        handler.addServlet(new ServletHolder(messagesServlet),"/messages/*");
 //        handler.addServlet(new ServletHolder(usersServlet), "/users");
-//        handler.addServlet(new ServletHolder(countriesServlet), "/countries");
+//        handler.addServlet(new ServletHolder(countriesServlet), "/liked");
 //        handler.addServlet(new ServletHolder(logoutServlet), "/logout");
 //        handler.addFilter(new FilterHolder(new LoginFilter(templateEngine, userService)), "/*", EnumSet.of(DispatcherType.REQUEST));
 //        handler.addServlet(CSSBootstrapServlet.class, "/css/bootstrap.min.css");
