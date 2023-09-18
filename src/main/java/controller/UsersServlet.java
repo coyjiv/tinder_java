@@ -17,6 +17,12 @@ public class UsersServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("lol?");
+        templateEngine.render("like-page.ftl", response);
+    }
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 //        Dotenv dotenv = Dotenv.load();
 //        String dbLogin = dotenv.get("DB_LOGIN");
