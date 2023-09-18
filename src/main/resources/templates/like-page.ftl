@@ -14,13 +14,14 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 </head>
 <body style="background-color: #f5f5f5;">
 
 <div class="col-4 offset-4">
     <div class="card">
         <div class="card-body">
-                <form action="/" method="POST">
+                <form action="/users" method="POST">
             <div class="row">
                 <div class="col-12 col-lg-12 col-md-12 text-center">
                     <img src="https://robohash.org/68.186.255.198.png" alt="" class="mx-auto rounded-circle img-fluid">

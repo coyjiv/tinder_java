@@ -29,6 +29,7 @@ public class JettyRun
 //        handler.addServlet(new ServletHolder(helloServlet), "/hello");
         handler.addServlet(new ServletHolder(usersServlet), "/users");
         handler.addServlet(CSSBootstrapServlet.class, "/css/bootstrap.min.css");
+        handler.addServlet(CSSGlobalServlet.class, "/css/style.css");
 //        handler.addServlet(new ServletHolder(countriesServlet), "/countries");
         handler.addServlet(new ServletHolder(likedServlet), "/liked" );
         handler.addServlet(new ServletHolder(loginServlet),"/login");
