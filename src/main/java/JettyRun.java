@@ -1,8 +1,10 @@
 import controller.*;
+import dao.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import service.*;
 
 /**
  * Hello world!
@@ -13,6 +15,18 @@ public class JettyRun
     public static void main( String[] args ) throws Exception {
         Dotenv dotenv = Dotenv.load();
         Server server = new Server(8081);
+
+        UserDao userDao = new JdbcUserDao();
+        UserService userService = new JdbcUserService(userDao);
+
+        MessageDao messageDao = new JdbcMessageDao();
+        MessageService messageService = new JdbcMessageService(messageDao);
+
+        ReactionDao reactionDao = new JdbcReactionDao();
+        ReactionService reactionService = new JdbcReactionService(reactionDao);
+
+
+        System.out.println(userDao.findById(1));
 
         TemplateEngine templateEngine = new TemplateEngine();
 
