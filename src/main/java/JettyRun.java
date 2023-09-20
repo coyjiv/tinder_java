@@ -34,7 +34,7 @@ public class JettyRun
         IndexServlet indexServlet = new IndexServlet(templateEngine);
         UsersServlet usersServlet = new UsersServlet(templateEngine, userService, reactionService);
 
-        LikedServlet likedServlet = new LikedServlet(templateEngine);
+        LikedServlet likedServlet = new LikedServlet(templateEngine, userService);
         LoginServlet loginServlet = new LoginServlet(templateEngine);
         MessagesServlet messagesServlet = new MessagesServlet(templateEngine);
 
