@@ -31,13 +31,17 @@
                             <tbody>
                                 <#list userList as user>
                                     <tr>
-                                        <td width="5">
+                                        <td width="10">
+                                        <a href="/messages/${user.userId}">
                                             <div class="avatar-img">
-                                                <img class="img-circle" src="${user.avatarUrl}" />
+                                                <img class="img-circle" src="${user.profilePhoto}" />
                                             </div>
+                                            </a>
                                         </td>
                                         <td class="align-middle">
+                                        <a href="/messages/${user.userId}">
                                             ${user.username}
+                                            </a>
                                         </td>
                                     </tr>
                                 </#list>
