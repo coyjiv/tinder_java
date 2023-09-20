@@ -21,26 +21,23 @@
 <div class="col-4 offset-4">
     <div class="card">
         <div class="card-body">
-                <form action="/users" method="POST">
-            <div class="row">
-                <div class="col-12 col-lg-12 col-md-12 text-center">
-                    <img src="https://robohash.org/68.186.255.198.png" alt="" class="mx-auto rounded-circle img-fluid">
-                    <h3 class="mb-0 text-truncated">User name</h3>
-                    <br>
+            <form action="/users" method="POST">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-md-12 text-center">
+                        <img src="${user.profilePhoto}" alt="" class="user-image mx-auto img-fluid">
+                        <h3 class="mb-0 text-truncated username">${user.username}</h3>
+                        <br>
+                        <input type="hidden" name="targetUserId" value="${user.userId}">
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <button class="btn btn-outline-danger btn-block" type="submit" name="action" value="dislike"><span class="fa fa-times"></span> Dislike</button>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <button class="btn btn-outline-success btn-block" type="submit" name="action" value="like"><span class="fa fa-heart"></span> Like</button>
+                    </div>
                 </div>
-                <div class="col-12 col-lg-6">
-                    <button class="btn btn-outline-danger btn-block"><span class="fa fa-times"></span> Dislike</button>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <button class="btn btn-outline-success btn-block"><span class="fa fa-heart"></span> Like</button>
-                </div>
-
-                <!--/col-->
-            </div>
             </form>
-            <!--/row-->
         </div>
-        <!--/card-block-->
     </div>
 </div>
 <script src="/js/bootstrap.min.js"></script>

@@ -14,6 +14,8 @@ public interface UserService {
     List<User> findAll();
     List<User> findLikedUsersByUserId(Long userId);
 
+    Optional<User> getNextUserToReact(Long loggedUserId);
+
     boolean register(User user);
     boolean login(String username, String password);
     boolean logout();

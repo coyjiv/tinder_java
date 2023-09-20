@@ -369,3 +369,12 @@ input:focus{
   outline: none;
 }
 
+.user-image{
+object-fit: cover;
+max-width: unset;
+width: 100%;
+}
+
+.username{
+margin-top: 20px;
+}
