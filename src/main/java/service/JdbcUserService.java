@@ -1,6 +1,8 @@
 package service;
 
+import dao.ReactionDao;
 import dao.UserDao;
+import domain.Reaction;
 import domain.User;
 
 import java.util.List;
@@ -8,9 +10,11 @@ import java.util.Optional;
 
 public class JdbcUserService implements UserService{
     private final UserDao userDao;
+    private final ReactionDao reactionDao;
 
-    public JdbcUserService(UserDao userDao) {
+    public JdbcUserService(UserDao userDao, ReactionDao reactionDao) {
         this.userDao = userDao;
+        this.reactionDao = reactionDao;
     }
 
 
@@ -62,5 +66,18 @@ public class JdbcUserService implements UserService{
     @Override
     public boolean logout() {
         return false;
+    }
+
+    public Optional<User> getNextUserToReact(Long loggedUserId) {
+        List<User> allUsers = userDao.findAll();
+        List<Reaction> reactionsByUser = reactionDao.findByUserId(loggedUserId);
+
+        for (User user : allUsers) {
+            boolean hasReacted = reactionsByUser.stream().anyMatch(reaction -> reaction.getTargetUserId().equals(user.getUserId()));
+            if (!hasReacted && !user.getUserId().equals(loggedUserId)) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 }

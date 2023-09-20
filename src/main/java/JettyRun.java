@@ -16,15 +16,14 @@ public class JettyRun
         Dotenv dotenv = Dotenv.load();
         Server server = new Server(8081);
 
-        UserDao userDao = new JdbcUserDao();
-        UserService userService = new JdbcUserService(userDao);
-
         MessageDao messageDao = new JdbcMessageDao();
         MessageService messageService = new JdbcMessageService(messageDao);
 
         ReactionDao reactionDao = new JdbcReactionDao();
         ReactionService reactionService = new JdbcReactionService(reactionDao);
 
+        UserDao userDao = new JdbcUserDao();
+        UserService userService = new JdbcUserService(userDao, reactionDao);
 
         System.out.println(userDao.findById(1));
 
@@ -33,7 +32,7 @@ public class JettyRun
         ServletContextHandler handler = new ServletContextHandler();
 
         IndexServlet indexServlet = new IndexServlet(templateEngine);
-        UsersServlet usersServlet = new UsersServlet(templateEngine);
+        UsersServlet usersServlet = new UsersServlet(templateEngine, userService, reactionService);
 
         LikedServlet likedServlet = new LikedServlet(templateEngine);
         LoginServlet loginServlet = new LoginServlet(templateEngine);
