@@ -20,7 +20,7 @@ public class JettyRun
 {
     public static void main( String[] args ) throws Exception {
         Dotenv dotenv = Dotenv.load();
-        Server server = new Server(8081);
+        Server server = new Server(Integer.parseInt(System.getenv("PORT")));
 
         MessageDao messageDao = new JdbcMessageDao();
         MessageService messageService = new JdbcMessageService(messageDao);
