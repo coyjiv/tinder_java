@@ -302,6 +302,7 @@ input:focus{
   max-height: 80vh;
   position: relative;
   top: 35px;
+  min-height: 500px;
 }
 .chats ul li{
   display: inline-block;
@@ -333,6 +334,7 @@ input:focus{
   width: 32px;
   height: 32px;
   border-radius: 100%;
+  object-fit: cover;
 }
 .receive-msg .receive-msg-desc{
   display: inline-block;
@@ -378,3 +380,32 @@ width: 100%;
 .username{
 margin-top: 20px;
 }
+
+.btn-send-message{
+display: flex;
+border: 0;
+background-color: #ECEFF1;
+border-radius: 10%;
+padding: 5px 10px;
+position: absolute;
+top: 50%;
+translate: 0 -50%;
+right: 10px;
+transition: all 0.3s ease;
+}
+
+.btn-send-message:hover{
+ scale:1.1;
+ background-color: #5E6060;
+ }
+
+.btn-send-message svg{
+width:22px;
+}
+
+.relative{
+position: relative;
+padding: 10px 0;
+padding-left: 10px;
+}
+

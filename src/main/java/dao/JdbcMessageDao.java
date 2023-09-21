@@ -14,14 +14,14 @@ import java.util.Optional;
 public class JdbcMessageDao implements MessageDao{
     @Override
     public boolean create(Message message) {
-        String sql = "INSERT INTO messages (message_id, sender_id, receiver_id, content, timestamp) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO messages (sender_id, receiver_id, content) VALUES (?, ?, ?)";
+
         try (Connection connection = DatabaseUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setLong(1, message.getMessageId());
-            preparedStatement.setLong(2, message.getSenderId());
-            preparedStatement.setLong(3, message.getReceiverId());
-            preparedStatement.setTimestamp(4, message.getTimestamp());
+            preparedStatement.setLong(1, message.getSenderId());
+            preparedStatement.setLong(2, message.getReceiverId());
+            preparedStatement.setString(3, message.getContent());
 
             int changedRows = preparedStatement.executeUpdate();
             return changedRows > 0;

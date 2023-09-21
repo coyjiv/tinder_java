@@ -13,6 +13,6 @@ public interface MessageService {
     List<Message> findAllBetweenUsers(Integer userId1, Integer userId2);
     boolean delete(Integer messageId);
 
-    boolean sendMessage(Message message, Integer userId1, Integer userId2);
+    boolean sendMessage(String message, Integer userId1, Integer userId2);
 
 }
