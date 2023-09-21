@@ -4,6 +4,7 @@ import domain.Message;
 import domain.User;
 import service.MessageService;
 import service.UserService;
+import utils.CookieUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,6 @@ public class MessagesServlet extends HttpServlet {
     private final TemplateEngine templateEngine;
     private final MessageService messageService;
     private final UserService userService;
-    private final Long MOCKED_LOGGED_IN_USER_ID = Long.valueOf(3);
 
     public MessagesServlet(TemplateEngine templateEngine, MessageService messageService, UserService userService) {
         this.templateEngine = templateEngine;
@@ -33,6 +33,11 @@ public class MessagesServlet extends HttpServlet {
 
         String pathInfo = request.getPathInfo();
 
+        long currentUserId = -1;
+        if (CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).isPresent()){
+            currentUserId = Long.parseLong(CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).get().getValue());
+        }
+
         if (pathInfo != null) {
             String[] pathParts = pathInfo.split("/");
 
@@ -42,7 +47,7 @@ public class MessagesServlet extends HttpServlet {
                 int intRecipientId = Integer.parseInt(recipientId);
 
                 String messageContent = request.getParameter("messageContent");
-                boolean isMessageSent = messageService.sendMessage(messageContent, Math.toIntExact(MOCKED_LOGGED_IN_USER_ID), intRecipientId);
+                boolean isMessageSent = messageService.sendMessage(messageContent, Math.toIntExact(currentUserId), intRecipientId);
                 if(isMessageSent){
                     try{
                         response.sendRedirect("/messages/"+recipientId);
@@ -60,6 +65,11 @@ public class MessagesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String pathInfo = request.getPathInfo();
 
+        long currentUserId = -1;
+        if (CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).isPresent()){
+            currentUserId = Long.parseLong(CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).get().getValue());
+        }
+
         if (pathInfo != null && !pathInfo.contains("img")) {
             String[] pathParts = pathInfo.split("/");
             if (pathParts.length > 1) {
@@ -67,7 +77,7 @@ public class MessagesServlet extends HttpServlet {
 
                 try{
 
-                    List<Message> messages = messageService.findAllBetweenUsers(Integer.parseInt(id), Math.toIntExact(MOCKED_LOGGED_IN_USER_ID));
+                    List<Message> messages = messageService.findAllBetweenUsers(Integer.parseInt(id), Math.toIntExact(currentUserId));
 
                     Optional<User> recipient = userService.findById(Integer.parseInt(id));
 

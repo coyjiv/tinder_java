@@ -7,18 +7,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private final TemplateEngine templateEngine;
 
     public LoginServlet(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO : отображать страницу логина
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        templateEngine.render("login.ftl", resp);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO:  обрабатывать введенные (логин и пароль)
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.sendRedirect("/");
     }
 }

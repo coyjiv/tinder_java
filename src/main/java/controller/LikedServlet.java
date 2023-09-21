@@ -2,8 +2,8 @@ package controller;
 
 import domain.User;
 import service.UserService;
+import utils.CookieUtil;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,6 @@ import java.util.Map;
 public class LikedServlet extends HttpServlet {
     private final TemplateEngine templateEngine;
     private final UserService userService;
-    private final Long MOCKED_LOGGED_IN_USER_ID = Long.valueOf(3);
 
     public LikedServlet(TemplateEngine templateEngine, UserService userService) {
         this.templateEngine = templateEngine;
@@ -28,7 +27,12 @@ public class LikedServlet extends HttpServlet {
 
         Map<String, Object> dataModel = new HashMap<>();
 
-        List<User> listOfLiked = userService.findLikedUsersByUserId(MOCKED_LOGGED_IN_USER_ID);
+        long currentUserId = -1;
+        if (CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).isPresent()){
+            currentUserId = Long.parseLong(CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).get().getValue());
+        }
+
+        List<User> listOfLiked = userService.findLikedUsersByUserId(currentUserId);
         if(listOfLiked.isEmpty()){
             try{
                 response.sendRedirect("/users");

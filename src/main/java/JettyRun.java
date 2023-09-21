@@ -2,9 +2,15 @@ import controller.*;
 import dao.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.session.SessionHandler;
+import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import service.*;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import java.util.EnumSet;
 
 /**
  * Hello world!
@@ -30,15 +36,19 @@ public class JettyRun
         TemplateEngine templateEngine = new TemplateEngine();
 
         ServletContextHandler handler = new ServletContextHandler();
-
+        SessionHandler sessionHandler = new SessionHandler();
+        handler.setSessionHandler(sessionHandler);
         IndexServlet indexServlet = new IndexServlet(templateEngine);
         UsersServlet usersServlet = new UsersServlet(templateEngine, userService, reactionService);
 
         LikedServlet likedServlet = new LikedServlet(templateEngine, userService);
         LoginServlet loginServlet = new LoginServlet(templateEngine);
+        LogoutServlet logoutServlet = new LogoutServlet(templateEngine);
+        Filter loginFilter = new LoginFilter(templateEngine, userService);
         MessagesServlet messagesServlet = new MessagesServlet(templateEngine, messageService, userService);
 
         handler.addServlet(new ServletHolder(indexServlet), "/");
+        handler.addFilter(new FilterHolder(loginFilter), "/*", EnumSet.of(DispatcherType.REQUEST));
 //        handler.addServlet(new ServletHolder(helloServlet), "/hello");
         handler.addServlet(new ServletHolder(usersServlet), "/users");
         handler.addServlet(CSSBootstrapServlet.class, "/css/bootstrap.min.css");
@@ -47,6 +57,7 @@ public class JettyRun
         handler.addServlet(new ServletHolder(likedServlet), "/liked" );
         handler.addServlet(new ServletHolder(loginServlet),"/login");
         handler.addServlet(new ServletHolder(messagesServlet),"/messages/*");
+        handler.addServlet(new ServletHolder(logoutServlet),"/logout");
 //        handler.addServlet(new ServletHolder(usersServlet), "/users");
 //        handler.addServlet(new ServletHolder(countriesServlet), "/liked");
 //        handler.addServlet(new ServletHolder(logoutServlet), "/logout");
