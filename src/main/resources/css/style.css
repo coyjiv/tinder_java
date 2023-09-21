@@ -90,12 +90,14 @@ i {  vertical-align: middle; }
 
 .avatar-img {
   display: flex;
-  align-items: center;
+  width: 45px;
+  height: 45px;
 }
 
 .img-circle {
   border-radius: 50%;
   width: 70px;
+  object-fit: cover;
 }
 
 .chat
