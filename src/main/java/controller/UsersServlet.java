@@ -4,6 +4,7 @@ import domain.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import service.ReactionService;
 import service.UserService;
+import utils.CookieUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class UsersServlet extends HttpServlet {
-    // Assuming user ID 1 for now; replace this with the actual logged-in user's ID
-    // change or remove from db for testing
-    private final Long MOCKED_LOGGED_IN_USER_ID = Long.valueOf(3);
     private final TemplateEngine templateEngine;
     private final UserService userService;
     private final ReactionService reactionService;
@@ -32,7 +30,10 @@ public class UsersServlet extends HttpServlet {
         // Assuming user ID 1 for now; replace this with the actual logged-in user's ID
         // change or remove from db for testing
 
-        Long currentUserId = MOCKED_LOGGED_IN_USER_ID;
+        long currentUserId = -1;
+        if (CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).isPresent()){
+            currentUserId = Long.parseLong(CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).get().getValue());
+        }
 
         Long targetUserId = Long.parseLong(request.getParameter("targetUserId"));
         String action = request.getParameter("action"); // "like" or "dislike"
@@ -53,10 +54,13 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        // Assuming user ID 1 for now; replace this with the actual logged-in user's ID
-        // change or remove from db for testing
 
-        Optional<User> nextUser = userService.getNextUserToReact(MOCKED_LOGGED_IN_USER_ID);
+        long currentUserId = -1;
+        if (CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).isPresent()){
+            currentUserId = Long.parseLong(CookieUtil.findCookieByName(request, LoginFilter.SESSION_USER_ID).get().getValue());
+        }
+
+        Optional<User> nextUser = userService.getNextUserToReact(currentUserId);
 
         nextUser.ifPresent(user -> {
             Map<String, Object> params = Map.of("user", user);

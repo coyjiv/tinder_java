@@ -5,11 +5,10 @@
 
     <body>
         <h1>Dashboard</h1>
-        <#if user??>
-        <p>Current logged user is : ${user.name}</p>
-        <p>His age is : ${user.age}</p>
+        <#if userName??>
+        <p>Current logged user is : ${userName}</p>
         </#if>
-        <a href="/countries"> Go to countries </a>
+        <a href="/users"> Go to users </a>
         <a href="/logout"> Log out </a>
     </body>
 </html>
