@@ -36,7 +36,7 @@ public class JettyRun
 
         LikedServlet likedServlet = new LikedServlet(templateEngine, userService);
         LoginServlet loginServlet = new LoginServlet(templateEngine);
-        MessagesServlet messagesServlet = new MessagesServlet(templateEngine);
+        MessagesServlet messagesServlet = new MessagesServlet(templateEngine, messageService, userService);
 
         handler.addServlet(new ServletHolder(indexServlet), "/");
 //        handler.addServlet(new ServletHolder(helloServlet), "/hello");

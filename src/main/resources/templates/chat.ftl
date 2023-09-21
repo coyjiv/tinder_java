@@ -25,7 +25,7 @@
                 <div class="row header-one text-white p-1">
                     <div class="col-md-6 name pl-2">
                         <i class="fa fa-comment"></i>
-                        <h6 class="ml-1 mb-0">Ketty Peris</h6>
+                        <h6 class="ml-1 mb-0">${recipient.username}</h6>
                     </div>
                     <div class="col-md-6 options text-right pr-0">
                         <i class="fa fa-window-minimize hide-chat-box hover text-center pt-1"></i>
@@ -48,86 +48,44 @@
             <div class="chat-content">
                 <div class="col-md-12 chats pt-3 pl-2 pr-3 pb-3">
                     <ul class="p-0">
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                Hii
-                            </p>
-                        </li>
-                        <li class="receive-msg float-left mb-2">
-                            <div class="sender-img">
-                                <img src="http://nicesnippets.com/demo/image1.jpg" class="float-left">
-                            </div>
-                            <div class="receive-msg-desc float-left ml-2">
-                                <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
-                                    hiii <br>
-                                    How are you ?<br>
-                                </p>
-                                <span class="receive-msg-time">ketty, Jan 25, 6:20 PM</span>
-                            </div>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                nice <br>
-                                Are you fine ?
-                            </p>
-                        </li>
-                        <li class="receive-msg float-left mb-2">
-                            <div class="sender-img">
-                                <img src="http://nicesnippets.com/demo/image1.jpg" class="float-left">
-                            </div>
-                            <div class="receive-msg-desc float-left ml-2">
-                                <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
-                                    Yes always
-                                </p>
-                            </div>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                <a href="https://nicesnippets.com/" class="text-dark rounded" target="_blank"><u>https://nicesnippets.com/</u></a>
-                            </p>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                Byy
-                            </p>
-                            <span class="send-msg-time">1 min</span>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                <a href="https://nicesnippets.com/" class="text-dark rounded" target="_blank"><u>https://nicesnippets.com/</u></a>
-                            </p>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                Byy
-                            </p>
-                            <span class="send-msg-time">1 min</span>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                <a href="https://nicesnippets.com/" class="text-dark rounded" target="_blank"><u>https://nicesnippets.com/</u></a>
-                            </p>
-                        </li>
-                        <li class="send-msg float-right mb-2">
-                            <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
-                                Byy
-                            </p>
-                            <span class="send-msg-time">1 min</span>
-                        </li>
+                        <#if messages??>
+                            <#list messages as message>
+                                <#if message.senderId == recipient.userId>
+                                    <li class="receive-msg float-left mb-2">
+                                        <div class="sender-img">
+                                            <img src="${recipient.profilePhoto}" class="float-left">
+                                        </div>
+                                        <div class="receive-msg-desc float-left ml-2">
+                                            <p class="bg-white m-0 pt-1 pb-1 pl-2 pr-2 rounded">
+                                                ${message.content}
+                                            </p>
+                                            <span class="receive-msg-time">
+                                                ${recipient.username}, ${message.timestamp}
+                                            </span>
+                                        </div>
+                                    </li>
+                                <#else>
+                                    <li class="send-msg float-right mb-2">
+                                        <p class="pt-1 pb-1 pl-2 pr-2 m-0 rounded">
+                                            ${message.content}
+                                        </p>
+                                    </li>
+                                </#if>
+                            </#list>
+                        </#if>
                     </ul>
+
                 </div>
-                <div class="col-md-12 p-2 msg-box border border-primary">
-                    <div class="row">
-                        <div class="col-md-2 options-left">
-                            <i class="fa fa-smile-o"></i>
-                        </div>
-                        <div class="col-md-7 pl-0">
-                            <input type="text" class="border-0" placeholder=" Send message" />
-                        </div>
-                        <div class="col-md-3 text-right options-right">
-                            <i class="fa fa-picture-o mr-2"></i>
-                        </div>
-                    </div>
+                <div class="col-md-12 msg-box border relative">
+                            <form action="/messages/${recipient.userId}" method="post">
+                            <input type="text" name="messageContent" class="border-0" placeholder=" Send message" />
+                            <button type="submit" class="btn-send-message">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                                        </svg>
+                                                        </button>
+                                                        </form>
+
                 </div>
             </div>
         </div>

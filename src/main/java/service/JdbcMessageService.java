@@ -43,7 +43,7 @@ public class JdbcMessageService implements MessageService{
     }
 
     @Override
-    public boolean sendMessage(Message message, Integer userId1, Integer userId2) {
-        return false;
+    public boolean sendMessage(String message, Integer userId1, Integer userId2) {
+        return messageDao.create(new Message(null, (long) userId1, (long) userId2, message, null));
     }
 }

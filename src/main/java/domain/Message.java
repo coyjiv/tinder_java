@@ -8,7 +8,16 @@ public class Message {
     private final Long receiverId;
     private final String content;
     private final Timestamp timestamp;
+    private boolean isCurrentUser;
 
+    public Message(Long messageId, Long senderId, Long receiverId, String content, Timestamp timestamp, boolean isCurrentUser) {
+        this.messageId = messageId;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.content = content;
+        this.timestamp = timestamp;
+        this.isCurrentUser = isCurrentUser;
+    }
     public Message(Long messageId, Long senderId, Long receiverId, String content, Timestamp timestamp) {
         this.messageId = messageId;
         this.senderId = senderId;
@@ -37,6 +46,14 @@ public class Message {
         return timestamp;
     }
 
+    public boolean isCurrentUser() {
+        return isCurrentUser;
+    }
+
+    public void setCurrentUser(boolean currentUser) {
+        isCurrentUser = currentUser;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,5 +77,17 @@ public class Message {
         result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
         result = 31 * result + (getTimestamp() != null ? getTimestamp().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "messageId=" + messageId +
+                ", senderId=" + senderId +
+                ", receiverId=" + receiverId +
+                ", content='" + content + '\'' +
+                ", timestamp=" + timestamp +
+                ", isCurrentUser=" + isCurrentUser +
+                '}';
     }
 }
