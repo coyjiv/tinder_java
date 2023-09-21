@@ -42,6 +42,7 @@ public class JettyRun
         UsersServlet usersServlet = new UsersServlet(templateEngine, userService, reactionService);
 
         LikedServlet likedServlet = new LikedServlet(templateEngine, userService);
+        RegistrationServlet registrationServlet = new RegistrationServlet(templateEngine,userService);
         LoginServlet loginServlet = new LoginServlet(templateEngine);
         LogoutServlet logoutServlet = new LogoutServlet(templateEngine);
         Filter loginFilter = new LoginFilter(templateEngine, userService);
@@ -49,6 +50,7 @@ public class JettyRun
 
         handler.addServlet(new ServletHolder(indexServlet), "/");
         handler.addFilter(new FilterHolder(loginFilter), "/*", EnumSet.of(DispatcherType.REQUEST));
+         handler.addServlet(new ServletHolder(registrationServlet),"/registration");
 //        handler.addServlet(new ServletHolder(helloServlet), "/hello");
         handler.addServlet(new ServletHolder(usersServlet), "/users");
         handler.addServlet(CSSBootstrapServlet.class, "/css/bootstrap.min.css");

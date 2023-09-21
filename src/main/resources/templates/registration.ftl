@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -18,15 +17,14 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin" action="/login" method="post">
+    <form class="form-signin" action="/registration" method="post">
         <img class="mb-4" src="https://tinder.com/static/tinder.png" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
         <label for="inputEmail" class="sr-only">Login</label>
-        <input name="login" type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
+        <input name="username" type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <a href="/registration" class="btn btn-lg btn-secondary btn-block mt-3">Register</a>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registration</button>
         <p class="mt-5 mb-3 text-muted">&copy; FAKETinder 2018</p>
     </form>
 </body>

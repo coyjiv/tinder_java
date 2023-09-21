@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        boolean isAsset = req.getServletPath().equals("/css/bootstrap.min.css") || req.getServletPath().equals("/css/style.css") || req.getServletPath().equals("/js/bootstrap.min.js");
+        boolean isAsset = req.getServletPath().equals("/css/bootstrap.min.css") || req.getServletPath().equals("/css/style.css") || req.getServletPath().equals("/js/bootstrap.min.js" ) || req.getServletPath().equals("/registration");
         if (session != null || isAsset) {
             chain.doFilter(req, resp);
             return;
