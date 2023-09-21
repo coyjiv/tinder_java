@@ -5,4 +5,4 @@ out/
 .DS_Store
 /docker/pgdata/
 node_modules/
-.env
+src/main/resources/.env
